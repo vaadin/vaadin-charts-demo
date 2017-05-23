@@ -1,0 +1,63 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-menu/app-menu.html">
+<link rel="import" href="../bower_components/app-menu/app-submenu.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+
+<dom-module id="demo-menu">
+  <template>
+    <style>
+       :host {
+        display: block;
+        --app-menu-color: #616161;
+        --water: #00B4F0;
+        --charcoal: #33383A;
+
+        --app-primary-color: var(--water);
+        --app-secondary-color: #e5e8e8;
+        --app-menu-selected-bg-color: rgba(0, 0, 0, 0.05);
+      }
+    </style>
+
+    <app-menu >
+      <template is="dom-repeat" id="categories" items="[[categories]]" as="category">
+        <app-submenu>
+          <div class="app-menu-item" slot="submenu-trigger">
+            <a name="[[category.name]]" class="app-menu-item">[[category.caption]]</a>
+            <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
+          </div>
+          <app-menu on-iron-select="_onIronSelect" slot="submenu-content">
+            <template is="dom-repeat" items="[[category.demos]]" as="demo">
+              <a category="[[category.name]]" name="[[demo.component]]" class="app-menu-item">[[demo.caption]]</a>
+            </template>
+          </app-menu>
+        </app-submenu>
+      </template>
+    </app-menu>
+
+  </template>
+
+  <script>
+    class DemoMenu extends Polymer.Element {
+      static get is() { return 'demo-menu'; }
+
+      static get properties() {
+        return {
+          categories: {
+            type: Array,
+          }
+        };
+      }
+
+      _onIronSelect(event) {
+
+        this.dispatchEvent(new CustomEvent('selection-change', {detail: {value: event.detail.item.name}}));
+
+      }
+
+
+    }
+
+    window.customElements.define(DemoMenu.is, DemoMenu);
+  </script>
+</dom-module>

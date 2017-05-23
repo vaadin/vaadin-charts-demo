@@ -1,0 +1,37 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/charts-demo-app.html",
+  "fragments": [
+    "src/sales-dashboard/sales-dashboard.html",
+    "src/image-collage/image-collage.html",
+    "src/row-types/row-types.html",
+    "src/404/404.html"
+  ],
+  "sources": [
+    "src/**/*",
+    "images/**/*",
+    "bower.json"
+  ],
+  "extraDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/*.js"
+  ],
+  "lint": {
+    "rules": [
+      "polymer-2"
+    ]
+  },
+  "builds": [{
+    "name": "vaadin-charts-es5",
+    "bundle": true,
+    "js": {"minify": true, "compile": true},
+    "css": {"minify": true},
+    "html": {"minify": false}
+  },{
+    "name": "vaadin-charts",
+    "bundle": true,
+    "js": {"minify": true, "compile": false},
+    "css": {"minify": true},
+    "html": {"minify": false}
+  }]
+}

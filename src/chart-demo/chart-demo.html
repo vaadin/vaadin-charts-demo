@@ -1,0 +1,50 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../common/demo-plus-sources-area.html">
+<link rel="import" href="../../bower_components/vaadin-charts/vaadin-charts.html">
+
+<dom-module id="chart-demo">
+  <template>
+    <style include="shared-styles">
+       :host {
+        height: 100%;
+      }
+    </style>
+
+    </div>
+  </template>
+
+  <script>
+    class ChartDemo extends Polymer.Element {
+      static get is() { return 'chart-demo'; }
+      static get properties() {
+        return {
+          demo: String,
+          category: String,
+          htmlValue: String
+        }
+      }
+      constructor() {
+        super();
+        this.__initialized = false;
+      }
+      connectedCallback() {
+        super.connectedCallback();
+      }
+      loadDemoContent() {
+        if (!this.__initialized){
+          Polymer.importHref("src/demos/" + this.category + "/" + this.demo + ".html", (result) => {
+            var demoBody = result.target.import.body.firstChild;
+            var demoArea = document.createElement("demo-plus-sources-area");
+            demoArea.appendChild(demoBody);
+            this.shadowRoot.appendChild(demoArea);
+            this.__initialized = true;
+          });
+      }
+    }
+
+    }
+
+    window.customElements.define(ChartDemo.is, ChartDemo);
+  </script>
+</dom-module>
