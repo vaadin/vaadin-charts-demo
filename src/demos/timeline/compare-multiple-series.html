@@ -3,19 +3,19 @@
     <iron-ajax
             auto
             id="dataFetcherAapl"
-            url="sample_data/multiple_aapl"
+            url="src/demos/timeline/sample_data/multiple_aapl"
             handle-as="json"
             last-response="{{seriesDataAapl}}"></iron-ajax>
     <iron-ajax
             auto
             id="dataFetcherGoog"
-            url="sample_data/multiple_goog"
+            url="src/demos/timeline/sample_data/multiple_goog"
             handle-as="json"
             last-response="{{seriesDataGoog}}"></iron-ajax>
     <iron-ajax
             auto
             id="dataFetcherMsft"
-            url="sample_data/multiple_msft"
+            url="src/demos/timeline/sample_data/multiple_msft"
             handle-as="json"
             last-response="{{seriesDataMsft}}"></iron-ajax>
     <vaadin-line-chart id="compare-multiple-series" timeline>

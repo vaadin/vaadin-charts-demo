@@ -22,7 +22,8 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
     "vaadin-charts": "2.0-preview",
     "paper-dialog": "2.0.0",
-    "iron-image": "2.0.0"
+    "iron-image": "2.0.0",
+    "vaadin-grid": "^3.0.0"
   },
   "devDependencies": {
     "web-component-tester": "6.0.0-prerelease.5"

@@ -19,7 +19,7 @@
       }
     </style>
 
-    <app-menu >
+    <app-menu>
       <template is="dom-repeat" id="categories" items="[[categories]]" as="category">
         <app-submenu>
           <div class="app-menu-item" slot="submenu-trigger">
@@ -51,7 +51,7 @@
 
       _onIronSelect(event) {
 
-        this.dispatchEvent(new CustomEvent('selection-change', {detail: {value: event.detail.item.name}}));
+        this.dispatchEvent(new CustomEvent('selection-change', { detail: { value: event.detail.item.name } }));
 
       }
 
