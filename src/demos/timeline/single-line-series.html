@@ -1,6 +1,6 @@
 <dom-module id="timeline-single-line">
   <template>
-    <iron-ajax auto id="dataFetcher" url="sample_data/simple_data" handle-as="json"
+    <iron-ajax auto id="dataFetcher" url="src/demos/timeline/sample_data/simple_data" handle-as="json"
                last-response="{{seriesData}}"></iron-ajax>
     <vaadin-line-chart id="single-line-series" timeline>
       <chart-title>AAPL Stock Price</chart-title>

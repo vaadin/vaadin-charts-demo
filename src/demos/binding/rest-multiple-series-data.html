@@ -3,13 +3,13 @@
   <template>
     <iron-ajax
             id="firstSeriesFetcher"
-            url="sample_data/simple_data"
+            url="src/demos/binding/sample_data/simple_data"
             handle-as="json"
             last-response="{{seriesData}}"
             debounce-duration="300"></iron-ajax>
     <iron-ajax
             id="secondSeriesFetcher"
-            url="sample_data/simple_data2"
+            url="src/demos/binding/sample_data/simple_data2"
             handle-as="json"
             last-response="{{series2Data}}"
             debounce-duration="300"></iron-ajax>

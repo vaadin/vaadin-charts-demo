@@ -794,8 +794,8 @@
 
       _afterLoad: function () {
         if (this.masterChartLoaded && this.detailChartLoaded) {
-          var detailComponent = document.querySelector('#detailchart');
-          var masterChart = document.querySelector('#masterchart').chart;
+          var detailComponent = this.$.detailchart;
+          var masterChart = this.$.masterchart.chart;
           if (detailComponent !== null && masterChart.series[0]) {
             var detailData = [],
                     detailChart = detailComponent.chart,

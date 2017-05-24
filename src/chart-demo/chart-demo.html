@@ -2,6 +2,8 @@
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../common/demo-plus-sources-area.html">
 <link rel="import" href="../../bower_components/vaadin-charts/vaadin-charts.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/vaadin-grid/vaadin-grid.html">
 
 <dom-module id="chart-demo">
   <template>
@@ -32,16 +34,18 @@
         super.connectedCallback();
       }
       loadDemoContent() {
-        if (!this.__initialized){
+        if (!this.__initialized) {
           Polymer.importHref("src/demos/" + this.category + "/" + this.demo + ".html", (result) => {
-            var demoBody = result.target.import.body.firstChild;
+            var demoBody = result.target.import.body;
             var demoArea = document.createElement("demo-plus-sources-area");
-            demoArea.appendChild(demoBody);
+            while (demoBody.childNodes.length > 0) {
+              demoArea.appendChild(demoBody.childNodes[0]);
+            }
             this.shadowRoot.appendChild(demoArea);
             this.__initialized = true;
           });
+        }
       }
-    }
 
     }
 
