@@ -36,10 +36,10 @@
       loadDemoContent() {
         if (!this.__initialized) {
           Polymer.importHref("src/demos/" + this.category + "/" + this.demo + ".html", (result) => {
-            var demoBody = result.target.import.body;
+            var demoContent = result.target.import.body ? result.target.import.body : result.target.import;
             var demoArea = document.createElement("demo-plus-sources-area");
-            while (demoBody.childNodes.length > 0) {
-              demoArea.appendChild(demoBody.childNodes[0]);
+            while (demoContent.childNodes.length > 0) {
+              demoArea.appendChild(demoContent.childNodes[0]);
             }
             this.shadowRoot.appendChild(demoArea);
             this.__initialized = true;
