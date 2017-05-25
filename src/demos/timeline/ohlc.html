@@ -3,7 +3,7 @@
     <iron-ajax
             auto
             id="dataFetcher"
-            url="src/demos/timeline/sample_data/ohlc_data"
+            url="[[_resolveDataURL('ohlc_data')]]"
             handle-as="json"
             last-response="{{seriesData}}"></iron-ajax>
     <vaadin-ohlc-chart id="ohlc-series" timeline>
@@ -28,7 +28,11 @@
   </template>
   <script>
     Polymer({
-      is: 'ohlc-example'
+      is: 'ohlc-example',
+
+      _resolveDataURL: function (fileName){
+        return this.resolveUrl("sample_data/" +fileName);
+      }
     });
   </script>
 </dom-module>

@@ -1,7 +1,6 @@
 <dom-module id="timeline-single-line">
   <template>
-    <iron-ajax auto id="dataFetcher" url="src/demos/timeline/sample_data/simple_data" handle-as="json"
-               last-response="{{seriesData}}"></iron-ajax>
+    <iron-ajax auto id="dataFetcher" url="[[_resolveDataURL('simple_data')]]" handle-as="json" last-response="{{seriesData}}"></iron-ajax>
     <vaadin-line-chart id="single-line-series" timeline>
       <chart-title>AAPL Stock Price</chart-title>
       <range-selector selected="4">
@@ -17,7 +16,11 @@
   </template>
   <script>
     Polymer({
-      is: 'timeline-single-line'
+      is: 'timeline-single-line',
+
+      _resolveDataURL: function (fileName){
+        return this.resolveUrl("sample_data/" +fileName);
+      }
     });
   </script>
 </dom-module>
