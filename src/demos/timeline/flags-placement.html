@@ -3,7 +3,7 @@
     <iron-ajax
             auto
             id="dataFetcher"
-            url="src/demos/timeline/sample_data/usdeur_data"
+            url="[[_resolveDataURL('usdeur_data')]]"
             handle-as="json"
             last-response="{{seriesData}}"></iron-ajax>
     <vaadin-flags-chart id="flags-placement" timeline>
@@ -50,7 +50,11 @@
 
   <script>
     Polymer({
-      is: 'flags-placement-example'
+      is: 'flags-placement-example',
+
+      _resolveDataURL: function (fileName){
+        return this.resolveUrl("sample_data/" +fileName);
+      }
     });
   </script>
 </dom-module>

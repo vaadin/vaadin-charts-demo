@@ -3,7 +3,7 @@
   <template>
     <iron-ajax
             id="dataFetcher"
-            url="src/demos/binding/sample_data/unformatted_data"
+            url="[[_resolveDataURL('unformatted_data')]]"
             handle-as="text"
             last-response="{{textData}}"
             debounce-duration="300"></iron-ajax>
@@ -46,6 +46,10 @@
 
       ready: function () {
         this.$.dataFetcher.generateRequest();
+      },
+
+      _resolveDataURL: function (fileName){
+        return this.resolveUrl("sample_data/" +fileName);
       }
     });
   </script>

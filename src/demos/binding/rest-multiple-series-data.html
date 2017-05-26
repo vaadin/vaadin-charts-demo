@@ -3,13 +3,13 @@
   <template>
     <iron-ajax
             id="firstSeriesFetcher"
-            url="src/demos/binding/sample_data/simple_data"
+            url="[[_resolveDataURL('simple_data')]]"
             handle-as="json"
             last-response="{{seriesData}}"
             debounce-duration="300"></iron-ajax>
     <iron-ajax
             id="secondSeriesFetcher"
-            url="src/demos/binding/sample_data/simple_data2"
+            url="[[_resolveDataURL('simple_data2')]]"
             handle-as="json"
             last-response="{{series2Data}}"
             debounce-duration="300"></iron-ajax>
@@ -51,6 +51,10 @@
           this.$.firstSeriesFetcher.generateRequest();
           this.$.secondSeriesFetcher.generateRequest();
         }, 2);
+      },
+
+      _resolveDataURL: function (fileName){
+        return this.resolveUrl("sample_data/" +fileName);
       }
     });
   </script>

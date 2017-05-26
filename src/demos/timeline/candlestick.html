@@ -3,7 +3,7 @@
     <iron-ajax
             auto
             id="dataFetcher"
-            url="src/demos/timeline/sample_data/ohlc_data"
+            url="[[_resolveDataURL('ohlc_data')]]"
             handle-as="json"
             last-response="{{seriesData}}"></iron-ajax>
     <vaadin-candlestick-chart id="candlestick-series" timeline>
@@ -26,7 +26,11 @@
   </template>
   <script>
     Polymer({
-      is: 'candlestick-example'
+      is: 'candlestick-example',
+
+      _resolveDataURL: function (fileName){
+        return this.resolveUrl("sample_data/" +fileName);
+      }
     });
   </script>
 </dom-module>
