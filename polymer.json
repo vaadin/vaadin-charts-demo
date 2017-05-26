@@ -2,9 +2,6 @@
   "entrypoint": "index.html",
   "shell": "src/charts-demo-app.html",
   "fragments": [
-    "src/sales-dashboard/sales-dashboard.html",
-    "src/image-collage/image-collage.html",
-    "src/row-types/row-types.html",
     "src/404/404.html"
   ],
   "sources": [

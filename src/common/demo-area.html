@@ -2,27 +2,26 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/vaadin-icons/vaadin-icons.html">
+<link rel="import" href="../../bower_components/iron-resizable-behavior/iron-resizable-behavior.html">
 
 <dom-module id="demo-area">
   <template>
     <style>
-
-      :host {
-        height:100%;
-        width:100%;
+       :host {
+        height: 100%;
+        width: 100%;
         box-sizing: border-box;
         display: flex;
         justify-content: center;
         background-image: url("../../../images/empty-background.png");
         background-repeat: repeat;
         background-size: 8px 8px;
-
       }
 
       #background {
         background-color: white;
-        padding:16px;
-        width:100%;
+        padding: 16px;
+        width: 100%;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
       }
@@ -32,15 +31,14 @@
         position: absolute;
         z-index: 1;
         bottom: 0;
-        left:calc(50% - 165px);
+        left: calc(50% - 165px);
         width: 330px;
         border: 1px solid white;
-        border-bottom:none;
+        border-bottom: none;
         background: #1B2021;
-        box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
+        box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
         padding: 8px 20px;
         box-sizing: border-box;
-
       }
 
       #buttons-header,
@@ -51,9 +49,9 @@
       #buttons-header {
         text-transform: uppercase;
         font: 400 13px "Open Sans", Verdana, sans-serif;
-        margin:0 10px;
+        margin: 0 10px;
         line-height: 26px;
-        display:inline-block;
+        display: inline-block;
       }
 
       paper-icon-button {
@@ -83,29 +81,29 @@
   </template>
 
   <script>
-    class DemoArea extends Polymer.Element{
+    class DemoArea extends Polymer.mixinBehaviors([Polymer.IronResizableBehavior], Polymer.Element) {
       static get is() {
         return 'demo-area';
       }
       static get properties() {
         return {
-            buttons: {
-              value: () =>[],
-              type: Object
+          buttons: {
+            value: () => [],
+            type: Object
+          },
+          modes: {
+            value: {
+              "full": "100%",
+              "mobile": "500px",
+              "tablet": "720px",
+              "desktop": "1200px"
             },
-            modes: {
-              value:{
-                "full":"100%",
-                "mobile":"500px",
-                "tablet":"720px",
-                "desktop":"1200px"
-              },
-              type: Object
-            },
-            header: {
-              value:"",
-              type:String
-            }
+            type: Object
+          },
+          header: {
+            value: "",
+            type: String
+          }
         }
       }
       constructor() {
@@ -113,18 +111,14 @@
       }
 
       _sizeChange(mode) {
-        for(let key in this.buttons) {
-          if(mode === key ) {
-            this.buttons[key].setAttribute("active",'')
+        for (let key in this.buttons) {
+          if (mode === key) {
+            this.buttons[key].setAttribute("active", '')
           } else {
             this.buttons[key].removeAttribute("active")
           }
           this.$.background.style.width = this.modes[mode];
-          let content = this.$.content.assignedNodes().filter(node => node.nodeType !== node.TEXT_NODE)[0];
-          content.style.width = this.modes[mode];
-          if(content.notifyResize) {
-            content.notifyResize();
-          }
+          this.notifyResize();
         }
       }
 
@@ -132,7 +126,7 @@
         super.ready();
         this.$.buttons.querySelectorAll("paper-icon-button").forEach((button) => {
           let id = button.getAttribute("id");
-          button.addEventListener("click", function() {
+          button.addEventListener("click", function () {
             this._sizeChange(id);
           }.bind(this));
 
