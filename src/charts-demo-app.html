@@ -152,9 +152,12 @@
         transition: all 0.3s ease-in-out;
       }
 
+      #menuTree {
+        overflow-y: scroll;
+      }
+
       #externalresource {
         font-family: 'Open Sans', sans-serif;
-        margin-top: 20px;
       }
 
       #resourcelinks {
@@ -256,12 +259,14 @@
 
     <div id="curtain" on-click="_closeMenu"></div>
     <div id="sideMenu" on-transitionend="_sideMenuTransitionend">
-      <div id="menucontent">
+      <div id="menuHeader">
         <div id="logoandname">
           <img id="logo" src="./images/charts-logo.svg">
           <div id="productname">Vaadin Charts</div>
         </div>
         <paper-icon-button id="closeMenu" icon="vaadin-icons:close" on-click="_closeMenu"></paper-icon-button>
+      </div>
+      <div id="menuTree">
         <demo-menu categories="[[categories]]" on-selection-change="_onSelectionChange">
         </demo-menu>
       </div>
