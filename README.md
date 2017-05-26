@@ -1,6 +1,6 @@
 # \<charts-demo\>
 
-Demo app for vaadin-charts element
+Demo app for vaadin-charts elements
 
 ### Setup
 
