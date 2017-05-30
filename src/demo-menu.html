@@ -16,6 +16,31 @@
         --app-primary-color: var(--water);
         --app-secondary-color: #e5e8e8;
         --app-menu-selected-bg-color: rgba(0, 0, 0, 0.05);
+        --primary-color: #e5e8e8;
+
+        --app-menu-background-color: var(--charcoal);
+        --app-menu-color: #e5e8e8;
+
+        --app-menu-focused-item: {
+          background-color: var(--water);
+          color: #e5e8e8;
+        }
+      }
+      .app-menu-item {
+        font-weight: bold;
+        min-height: 40px;
+      }
+
+      .app-menu-item:focus {
+        background-color: var(--charcoal);
+      }
+
+      .app-menu-item:hover, .app-menu-item[aria-selected] {
+        background-color: var(--water) !important; /* for some reason, the order in Firefox is different, so this is overwritten withou !important */
+      }
+
+      .submenu .app-menu-item{ 
+        padding-left: 34px;
       }
     </style>
 
@@ -23,10 +48,10 @@
       <template is="dom-repeat" id="categories" items="[[categories]]" as="category">
         <app-submenu>
           <div class="app-menu-item" slot="submenu-trigger">
-            <a name="[[category.name]]" class="app-menu-item">[[category.caption]]</a>
+            <a name="[[category.name]]">[[category.caption]]</a>
             <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
           </div>
-          <app-menu on-iron-select="_onIronSelect" slot="submenu-content">
+          <app-menu on-iron-select="_onIronSelect" slot="submenu-content" class="submenu">
             <template is="dom-repeat" items="[[category.demos]]" as="demo">
               <a category="[[category.name]]" name="[[demo.component]]" class="app-menu-item">[[demo.caption]]</a>
             </template>
