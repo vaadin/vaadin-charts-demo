@@ -255,7 +255,7 @@
     </style>
 
     <app-location route="{{route}}" use-hash-as-path></app-location>
-    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+    <app-route route="{{route}}" pattern="/:category/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
     <div id="curtain" on-click="_closeMenu"></div>
     <div id="sideMenu" on-transitionend="_sideMenuTransitionend">
@@ -267,7 +267,7 @@
         <paper-icon-button id="closeMenu" icon="vaadin-icons:close" on-click="_closeMenu"></paper-icon-button>
       </div>
       <div id="menuTree">
-        <demo-menu categories="[[categories]]" on-selection-change="_onSelectionChange">
+        <demo-menu categories="[[categories]]" category="[[category]]" page="[[page]]">
         </demo-menu>
       </div>
       <div id="externalresource">
@@ -305,6 +305,11 @@
 
       static get properties() {
         return {
+          category: {
+            type: String,
+            reflectToAttribute: true,
+            value: ''
+          },
           page: {
             type: String,
             reflectToAttribute: true,
@@ -739,8 +744,19 @@
 
       static get observers() {
         return [
-          '_routePageChanged(routeData.page)',
+          '_routePageChanged(routeData.category,routeData.page)',
         ];
+      }
+
+      connectedCallback () {
+        super.connectedCallback();
+
+        // If it is the first load and the it is at root path, defaults to the first chart
+        // Change the route and create an event, so app-route will listen and react 
+        if (this.route.path === '/' || this.route.path === '') {
+          window.history.pushState({}, '', '#/column_and_bar/bar-with-negative-stack');
+          window.dispatchEvent(new CustomEvent('location-changed'));
+        }
       }
 
       _sideMenuTransitionend(el) {
@@ -748,20 +764,16 @@
         this.debounce('_notifyResize', this.notifyResize, 300);
       }
 
-      _routePageChanged(page) {
+      _routePageChanged(category, page) {
         // Polymer 2.0 will call with `undefined` on initialization.
         // Ignore until we are properly called with a string.
         if (page === undefined) {
           return;
         }
-
         // If no page was found in the route data, page will be an empty string.
-        // Deault to 'view1' in that case.
-        this.page = page || 'pie';
-      }
-
-      _onSelectionChange(selection) {
-        this.page = selection.detail.value;
+        // Deault to 'column_and_bar/bar-with-negative-stack' in that case.
+        this.category = category || 'column_and_bar';
+        this.page = page || 'bar-with-negative-stack';
       }
 
       _pageChanged(page) {
@@ -770,9 +782,11 @@
         // Polymer.importHref(resolvedPageUrl, null,
         // this._showPage404.bind(this), true);
         if (page) {
-
-          var chartDemo = this.shadowRoot.querySelector('#' + page);
-          chartDemo.loadDemoContent();
+          // For the first load, it needs to wait for the components to load
+          Polymer.RenderStatus.beforeNextRender(this, () => {
+            const chartDemo = this.shadowRoot.querySelector('#' + page);
+            chartDemo.loadDemoContent();
+          });
         }
         this._closeMenu();
       }
