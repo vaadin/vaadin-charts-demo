@@ -46,14 +46,14 @@
 
     <app-menu>
       <template is="dom-repeat" id="categories" items="[[categories]]" as="category">
-        <app-submenu>
+        <app-submenu id="[[category.name]]">
           <div class="app-menu-item" slot="submenu-trigger">
             <a name="[[category.name]]">[[category.caption]]</a>
             <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
           </div>
-          <app-menu on-iron-select="_onIronSelect" slot="submenu-content" class="submenu">
+          <app-menu slot="submenu-content" class="submenu">
             <template is="dom-repeat" items="[[category.demos]]" as="demo">
-              <a category="[[category.name]]" name="[[demo.component]]" class="app-menu-item">[[demo.caption]]</a>
+              <a category="[[category.name]]" id="[[demo.component]]" name="[[demo.component]]" href="#/[[category.name]]/[[demo.component]]" class="app-menu-item">[[demo.caption]]</a>
             </template>
           </app-menu>
         </app-submenu>
@@ -70,17 +70,27 @@
         return {
           categories: {
             type: Array,
-          }
+          },
+
+          category: String,
+          page: String
         };
       }
 
-      _onIronSelect(event) {
+      connectedCallback() {
+        super.connectedCallback();
 
-        this.dispatchEvent(new CustomEvent('selection-change', { detail: { value: event.detail.item.name } }));
+        Polymer.RenderStatus.beforeNextRender(this, () => {
+          if (this.category !== '' && this.page !== '') {
+            const category = this.shadowRoot.querySelector(`#${this.category}`);
 
+            if (!category.opened && !!category) {
+              const menuItem = category.querySelector(`#${this.page}`);
+              menuItem && menuItem.click();
+            }
+          }
+        });
       }
-
-
     }
 
     window.customElements.define(DemoMenu.is, DemoMenu);
