@@ -26,6 +26,7 @@
           color: #e5e8e8;
         }
       }
+
       .app-menu-item {
         font-weight: bold;
         min-height: 40px;
@@ -39,7 +40,7 @@
         background-color: var(--water) !important; /* for some reason, the order in Firefox is different, so this is overwritten withou !important */
       }
 
-      .submenu .app-menu-item{ 
+      .submenu .app-menu-item {
         padding-left: 34px;
       }
     </style>
@@ -53,7 +54,8 @@
           </div>
           <app-menu slot="submenu-content" class="submenu">
             <template is="dom-repeat" items="[[category.demos]]" as="demo">
-              <a category="[[category.name]]" id="[[demo.component]]" name="[[demo.component]]" href="#/[[category.name]]/[[demo.component]]" class="app-menu-item">[[demo.caption]]</a>
+              <a category="[[category.name]]" id="[[demo.component]]" name="[[demo.component]]" href="#/[[category.name]]/[[demo.component]]"
+                class="app-menu-item">[[demo.caption]]</a>
             </template>
           </app-menu>
         </app-submenu>
@@ -73,20 +75,20 @@
           },
 
           category: String,
-          page: String
+          page: String,
+          oldPage: String
         };
       }
 
-      connectedCallback() {
-        super.connectedCallback();
-
+      updateSelection() {
         Polymer.RenderStatus.beforeNextRender(this, () => {
           if (this.category !== '' && this.page !== '') {
             const category = this.shadowRoot.querySelector(`#${this.category}`);
 
-            if (!category.opened && !!category) {
+            if (category && this.page) {
               const menuItem = category.querySelector(`#${this.page}`);
               menuItem && menuItem.click();
+              this.oldPage = this.page;
             }
           }
         });

@@ -267,7 +267,7 @@
         <paper-icon-button id="closeMenu" icon="vaadin:close" on-click="_closeMenu"></paper-icon-button>
       </div>
       <div id="menuTree">
-        <demo-menu categories="[[categories]]" category="[[category]]" page="[[page]]">
+        <demo-menu id="menu" categories="[[categories]]" category="[[category]]" page="[[page]]">
         </demo-menu>
       </div>
       <div id="externalresource">
@@ -748,7 +748,7 @@
         ];
       }
 
-      connectedCallback () {
+      connectedCallback() {
         super.connectedCallback();
 
         // If it is the first load and the it is at root path, defaults to the first chart
@@ -774,6 +774,7 @@
         // Deault to 'column_and_bar/bar-with-negative-stack' in that case.
         this.category = category || 'column_and_bar';
         this.page = page || 'bar-with-negative-stack';
+        this.$.menu.updateSelection();
       }
 
       _pageChanged(page) {
