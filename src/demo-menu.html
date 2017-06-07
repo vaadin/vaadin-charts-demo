@@ -83,7 +83,8 @@
       updateSelection() {
         Polymer.RenderStatus.beforeNextRender(this, () => {
           if (this.category !== '' && this.page !== '') {
-            const category = this.shadowRoot.querySelector(`#${this.category}`);
+            const category = this.shadowRoot.querySelector(`[id='${this.category}']`);
+
 
             if (category && this.page) {
               const menuItem = category.querySelector(`#${this.page}`);
