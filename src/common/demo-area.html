@@ -87,6 +87,10 @@
       }
       static get properties() {
         return {
+          selected: {
+            value: {value:"full"},
+            type: Object
+          },
           buttons: {
             value: () => [],
             type: Object
@@ -110,7 +114,8 @@
         super();
       }
 
-      _sizeChange(mode) {
+      _sizeChange() {
+        var mode = this.selected.value;
         for (let key in this.buttons) {
           if (mode === key) {
             this.buttons[key].setAttribute("active", '')
@@ -127,11 +132,13 @@
         this.$.buttons.querySelectorAll("paper-icon-button").forEach((button) => {
           let id = button.getAttribute("id");
           button.addEventListener("click", function () {
-            this._sizeChange(id);
+            this.selected.value = id;
+            this._sizeChange();
           }.bind(this));
 
           this.buttons[id] = button;
         });
+        this._sizeChange();
       }
 
       connectedCallback() {
